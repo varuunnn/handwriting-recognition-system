@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Handwriting Recognition</title>
+   <!--Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+   <!--Google Font-->
+   <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet" />
+   <!--Stylesheet-->
+   <link rel="stylesheet" href="./static/upload.css" />
+</head>
+
+<body>
+   <div class="header">
+      <h1>Handwriting Recognition App</h1>
+   </div>
+   <form action="/" method="post" enctype="multipart/form-data">
+      <div class="container">
+         <figure class="image-container">
+            <img id="chosen-image" />
+            <figcaption id="file-name"></figcaption>
+         </figure>
+
+         <input type="file" name="imagefile" id="upload-button" accept="image/png" />
+         <label for="upload-button">
+            <i class="fas fa-upload"></i> &nbsp; Choose a Photo
+         </label>
+         <br/>
+         <input id="submit-button" type="submit"/>
+         <label for="submit-button">
+            Submit
+         </label>
+         <br/>
+         {% if prediction %}
+         <p id="prediction">Recognized - {{prediction}}</p>
+         {% endif %}
+      </div>
+   </form>
+
+   <!--Script-->
+   <script>
+      let uploadButton = document.getElementById("upload-button");
+      let chosenImage = document.getElementById("chosen-image");
+      let fileName = document.getElementById("file-name");
+
+      uploadButton.onchange = () => {
+         let reader = new FileReader();
+         reader.readAsDataURL(uploadButton.files[0]);
+         console.log(uploadButton.files[0]);
+         reader.onload = () => {
+            chosenImage.setAttribute("src", reader.result);
+         };
+         fileName.textContent = uploadButton.files[0].name;
+      };
+   </script>
+</body>
+
+</html>
